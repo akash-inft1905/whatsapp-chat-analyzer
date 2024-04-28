@@ -1,9 +1,9 @@
 #importing required packages
 
 import streamlit as st #for frontend
-import matplotlib.pyplot as plt #for chats
+import matplotlib.pyplot as plt #for charts
 import preprocessor, helper #for preprocessing & displaying the chats
-import seaborn as sns #for chats
+import seaborn as sns #for charts
 
 #setting of basic frontend using streamlit
 st.set_page_config(page_title='WhatsApp Chat Analyzer ',layout='wide', initial_sidebar_state='expanded')
