@@ -8,7 +8,7 @@ from wordcloud import WordCloud
 from urlextract import URLExtract
 extract = URLExtract()
 
-
+#fetching statistics
 def fetch_stats(selected_user, df):
 
     if (selected_user != "Overall"):
@@ -32,13 +32,13 @@ def fetch_stats(selected_user, df):
 
     return num_messages, words, num_media_msgs, links
 
-
+#finding and returning the most active users in the group
 def most_active_users(df):
     x = df['user'].value_counts().head()
     df = round((df['user'].value_counts() / df.shape[0]) * 100, 2).reset_index().rename(columns={'index': 'name', 'user': 'percent'})
     return x, df
 
-
+#generating a word cloud based on the messages
 def create_wordcloud(selected_user, df):
 
     f = open('stop_hinglish.txt', 'r')
@@ -63,7 +63,7 @@ def create_wordcloud(selected_user, df):
     df_wc = wc.generate(words['words'].str.cat(sep=" "))
     return df_wc
 
-
+#finding and returning the most common words used
 def most_common_words(selected_user, df):
 
     f = open('stop_hinglish.txt', 'r')
@@ -90,7 +90,7 @@ def most_common_words(selected_user, df):
     most_common_df = pd.DataFrame(Counter(words).most_common(20))
     return most_common_df
 
-
+#analyzing and returning the most common emojis used
 def emoji_helper(selected_user, df):
     if (selected_user != "Overall"):
         df = df[df['user'] == selected_user]
@@ -102,7 +102,7 @@ def emoji_helper(selected_user, df):
     emoji_df = pd.DataFrame(Counter(emojis).most_common((len(Counter(emojis)))))
     return emoji_df
 
-
+# creating a timeline of monthly message counts
 def monthly_timeline(selected_user, df):
     if (selected_user != "Overall"):
         df = df[df['user'] == selected_user]
@@ -116,7 +116,7 @@ def monthly_timeline(selected_user, df):
     timeline['time'] = time
 
     return timeline
-
+# creating a timeline of daily message counts
 def daily_timeline(selected_user, df):
     if (selected_user != "Overall"):
         df = df[df['user'] == selected_user]
@@ -125,18 +125,21 @@ def daily_timeline(selected_user, df):
 
     return daily_timeline
 
+# creating a bar chart showing the most active days of the week
 def week_activity_map(selected_user, df):
     if (selected_user != "Overall"):
         df = df[df['user'] == selected_user]
 
     return df['day_name'].value_counts()
 
+# creating a bar chart showing the most active months 
 def month_activity_map(selected_user, df):
     if (selected_user != "Overall"):
         df = df[df['user'] == selected_user]
 
     return df['month'].value_counts()
 
+# creating a heatmap showing the activity pattern of the selected user throughout the week
 def activity_heatmap(selected_user, df):
     if (selected_user != "Overall"):
         df = df[df['user'] == selected_user]
